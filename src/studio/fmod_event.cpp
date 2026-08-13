@@ -41,6 +41,7 @@ void FmodEvent::_bind_methods() {
     ClassDB::bind_method(D_METHOD("is_valid"), &FmodEvent::is_valid);
     ClassDB::bind_method(D_METHOD("release"), &FmodEvent::release);
     ClassDB::bind_method(D_METHOD("get_event_pointer"), &FmodEvent::get_event_pointer);
+    ClassDB::bind_method(D_METHOD("get_channel_group"), &FmodEvent::get_channel_group);
 
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "paused",PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_paused", "get_paused");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "pitch",PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_pitch", "get_pitch");
@@ -257,6 +258,7 @@ void FmodEvent::set_distance_scale(float scale){
     distanceScale = scale;
 }
 
+<<<<<<< HEAD
 PackedByteArray FmodEvent::get_event_pointer() {
     PackedByteArray array;
 
@@ -268,6 +270,18 @@ PackedByteArray FmodEvent::get_event_pointer() {
     }
 
     return array;
+=======
+Ref<FmodChannelGroup> FmodEvent::get_channel_group() const {
+    FMOD::ChannelGroup* channel_group = nullptr;
+    ERROR_CHECK_WITH_REASON(_wrapped->getChannelGroup(&channel_group), vformat("Cannot get ChannelGroup"));
+
+    if (channel_group) {
+        Ref<FmodChannelGroup> ref = FmodChannelGroup::create_ref(channel_group);
+        return ref;
+    }
+
+    return {};
+>>>>>>> 141bdf3d500799d7e3021bcc7c1af7b95db7a62c
 }
 
 FmodEvent::~FmodEvent() {
