@@ -154,12 +154,11 @@ void FmodServer::_bind_methods() {
     ClassDB::bind_method(D_METHOD("unmute_all_events"), &FmodServer::unmute_all_events);
     ClassDB::bind_method(D_METHOD("mixer_suspend"), &FmodServer::mixer_suspend);
     ClassDB::bind_method(D_METHOD("mixer_resume"), &FmodServer::mixer_resume);
-    ClassDB::bind_method(D_METHOD("create_sound_instance", "path"), &FmodServer::create_sound_instance);
 
     ClassDB::bind_method(D_METHOD("add_event_created_callback", "callback"), &FmodServer::add_event_created_callback);
     ClassDB::bind_method(D_METHOD("add_event_removed_callback", "callback"), &FmodServer::add_event_removed_callback);
 
-    REGISTER_ALL_CONSTANTS
+}
 
 FmodServer::FmodServer() : system(nullptr), coreSystem(nullptr), isNotInitializedPrinted(false), cache(nullptr) {
     ERR_FAIL_COND(singleton != nullptr);
