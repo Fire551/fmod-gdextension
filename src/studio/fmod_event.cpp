@@ -42,6 +42,7 @@ void FmodEvent::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_programmer_callback_sound_key"), &FmodEvent::get_programmers_callback_sound_key);
     ClassDB::bind_method(D_METHOD("is_valid"), &FmodEvent::is_valid);
     ClassDB::bind_method(D_METHOD("release"), &FmodEvent::release);
+    ClassDB::bind_method(D_METHOD("get_event_pointer"), &FmodEvent::get_event_pointer);
     ClassDB::bind_method(D_METHOD("get_channel_group"), &FmodEvent::get_channel_group);
 
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "paused",PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_paused", "get_paused");

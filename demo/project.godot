@@ -20,10 +20,10 @@ modules="org/godotengine/godot/FmodSingleton"
 
 config/name="Fmod Demo"
 run/main_scene="res://low_level_2D/FmodScriptTest.tscn"
-config/features=PackedStringArray("4.7")
-config/icon="uid://cih2yjmtjoohg"
 run/main_loop_type.export-tests="ExportTestMain"
 run/main_scene.export-tests="res://test_runner/ExportTestScene.tscn"
+config/features=PackedStringArray("4.6")
+config/icon="uid://cih2yjmtjoohg"
 
 [dotnet]
 
