@@ -9,14 +9,14 @@ The FMOD GDExtension provides a comprehensive set of classes and nodes for integ
 The main singleton class that manages the FMOD Studio API integration. Access it directly as `FmodServer` since it's registered as a singleton.
 
 **Key Methods:**
-- `init(p_settings: FmodGeneralSettings)` - Initialize the FMOD system
+- `init(settings: FmodSettings = null)` - Start FMOD with these settings, or with the Project Settings
 - `load_bank(pathToBank: String, flag: int) -> FmodBank` - Load an FMOD bank file
 - `create_event_instance(eventPath: String) -> FmodEvent` - Create an event instance
 - `get_event(eventPath: String) -> FmodEventDescription` - Get event description
 - `get_bus(busPath: String) -> FmodBus` - Get bus by path
 - `get_vca(vcaPath: String) -> FmodVCA` - Get VCA by path
 - `play_one_shot(event_name: String)` - Play a one-shot event
-- `update()` - Update the FMOD system (call every frame)
+- `update()` - Update the FMOD system (FMOD calls it every frame by itself)
 - `shutdown()` - Shutdown and cleanup FMOD
 
 **Global Parameters:**
@@ -40,8 +40,8 @@ Represents an instance of an FMOD Studio event that can be played and controlled
 - `set_parameter_by_id(id: int, value: float)` - Set parameter by ID
 
 **Spatial Audio:**
-- `set_3d_attributes(transform: Transform3D)` - Set 3D position and rotation
-- `set_2d_attributes(position: Transform2D)` - Set 2D position
+- `set_transform_3d(transform: Transform3D)` - Set 3D position and rotation
+- `set_transform_2d(position: Transform2D)` - Set 2D position
 - `set_node_attributes(node: Node)` - Attach to node's transform
 
 **Properties:**
@@ -85,6 +85,11 @@ Represents a loaded FMOD Studio bank containing audio content.
 
 **State:**
 - `get_loading_state() -> int` - Check bank loading status
+- `get_sample_loading_state() -> int` - Check the loading status of the sample data
+
+**Sample Data:**
+- `load_sample_data()` - Load the sample data of all the bank's events ahead of playing them
+- `unload_sample_data()` - Unload the sample data `load_sample_data()` loaded
 - `update_bank_data()` - Force update cached data
 
 ## Node Classes
@@ -142,6 +147,7 @@ Utility node for automatically loading FMOD Studio banks when entering the scene
 
 **Properties:**
 - `bank_paths: Array` - Array of bank file paths to load
+- `preload_sample_data: bool` - Also load the sample data of the banks while they are loaded
 
 **Methods:**
 - `set_bank_paths(paths: Array)` - Set banks to load
@@ -218,10 +224,10 @@ emitter.set_parameter("TimeOfDay", 0.5)
 
 ```gdscript
 # Load a bank
-var bank = FmodServer.load_bank("res://audio/Master.bank", FMOD_STUDIO_LOAD_BANK_NORMAL)
+var bank = FmodServer.load_bank("res://audio/Master.bank", FmodBank.StudioLoadBankFlags.NORMAL)
 
 # Wait for async loading
-while bank.get_loading_state() == FMOD_STUDIO_LOADING_STATE_LOADING:
+while bank.get_loading_state() == FmodBank.StudioLoadingState.LOADING:
     await get_tree().process_frame
 
 # Use events from the bank
