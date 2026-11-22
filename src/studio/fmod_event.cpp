@@ -257,6 +257,18 @@ void FmodEvent::set_distance_scale(float scale){
     distanceScale = scale;
 }
 
+PackedByteArray FmodEvent::get_event_pointer() {
+    PackedByteArray array;
+
+    std::intptr_t pointer = reinterpret_cast<std::intptr_t>(_wrapped);
+    array.resize(sizeof(std::intptr_t));
+
+    for (int i = 0; i < sizeof(std::intptr_t); i++) {
+        array[i] = static_cast<uint8_t>((pointer >> (i * 8)) & 0xFF);
+    }
+
+    return array;
+}
 Ref<FmodChannelGroup> FmodEvent::get_channel_group() const {
     FMOD::ChannelGroup* channel_group = nullptr;
     ERROR_CHECK_WITH_REASON(_wrapped->getChannelGroup(&channel_group), vformat("Cannot get ChannelGroup"));
@@ -267,6 +279,7 @@ Ref<FmodChannelGroup> FmodEvent::get_channel_group() const {
     }
 
     return {};
+
 }
 
 FmodEvent::~FmodEvent() {

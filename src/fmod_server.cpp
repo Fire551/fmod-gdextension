@@ -138,6 +138,7 @@ void FmodServer::_bind_methods() {
     ClassDB::bind_method(D_METHOD("unmute_all_events"), &FmodServer::unmute_all_events);
     ClassDB::bind_method(D_METHOD("mixer_suspend"), &FmodServer::mixer_suspend);
     ClassDB::bind_method(D_METHOD("mixer_resume"), &FmodServer::mixer_resume);
+    ClassDB::bind_method(D_METHOD("create_sound_instance", "path"), &FmodServer::create_sound_instance);
 
     ClassDB::bind_method(D_METHOD("create_sound_instance", "path"), &FmodServer::create_sound_instance);
     REGISTER_ALL_CONSTANTS
